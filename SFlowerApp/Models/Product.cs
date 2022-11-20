@@ -18,19 +18,20 @@ namespace SapphireApp.Models
         public int Id { get; set; }
         [StringLength(50)]
         [Unicode(false)]
-        public string ProductName { get; set; } = null!;
+        public string ProductName { get; set; } 
         [StringLength(50)]
         [Unicode(false)]
-        public string Category { get; set; } = null!;
+        public string Category { get; set; }
         [StringLength(30)]
         [Unicode(false)]
-        public string Color { get; set; } = null!;
+        public string Color { get; set; }
         [Column(TypeName = "decimal(18, 0)")]
         public decimal Price { get; set; }
         [StringLength(50)]
         [Unicode(false)]
         public string? Description { get; set; }
-        //public string ProductImage { get; set; }
+
+        public string ProductImage { get; set; }
 
         [InverseProperty("Product")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

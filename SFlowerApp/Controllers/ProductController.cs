@@ -65,9 +65,25 @@ namespace SapphireApp.Controllers
             {
                 return View(product);
             }
-            //update - db
-            _context.Update(product);
+            //pull product object from db
+            Product product1 = _context.Products.SingleOrDefault(x => x.Id == product.Id);
+
+            //map the properties of the paramater product to the product we pulled from the database
+            product1.ProductName = product.ProductName;
+            product1.Category = product.Category;
+            product1.Color = product.Color;
+            product1.Price = product.Price;
+            product1.Description = product.Description;
+
+            //update the database
+            _context.Update(product1);
+            //save the changes
             _context.SaveChanges();
+
+
+            //update - db
+            //_context.Update(product);
+            // _context.SaveChanges();
             //or update properties with  the information
             //Product p = _context.Products.SingleOrDefault(x => x.Id == product.Id);
             //p.ProductName = product.ProductName;
@@ -77,8 +93,9 @@ namespace SapphireApp.Controllers
             //p.Description = product.Description;
             //_context.Update(p);
             //_context.SaveChanges();
-            return View(product);
+            //return View(product);
             //return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
         public IActionResult Details(int id)
         {
