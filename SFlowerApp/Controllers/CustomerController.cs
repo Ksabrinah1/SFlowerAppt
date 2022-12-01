@@ -84,6 +84,10 @@ namespace SapphireApp.Controllers
             }
             return View(customer);
         }
+        public IActionResult CreateOrder(int id) 
+        {
+            return RedirectToAction("Create", "Order", id);
+        }
     }
        
 }
