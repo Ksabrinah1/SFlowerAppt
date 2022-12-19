@@ -49,5 +49,7 @@ namespace SapphireApp.Models
         public virtual Customer Customer { get; set; } = null!;
         [InverseProperty("Order")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+       
     }
 }

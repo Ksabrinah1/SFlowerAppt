@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using SapphireApp.Data;
@@ -14,6 +15,8 @@ namespace SapphireApp.Controllers
         {
             _context = context;
         }
+        
+        
         //default index, always a get method. Here, we're just getting a collection of customers
         public IActionResult Index()
         {

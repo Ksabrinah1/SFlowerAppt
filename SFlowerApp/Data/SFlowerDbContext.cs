@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using SapphireApp.Models;
+using SapphireApp.ViewModels;
 
 namespace SapphireApp.Data
 {
     public partial class SFlowerDbContext : DbContext
     {
-        public SFlowerDbContext()
-        {
-        }
+        //public SFlowerDbContext()
+        //{
+        //}
 
         //This is the constructor we will use
         //this constructor takes options
@@ -19,10 +21,10 @@ namespace SapphireApp.Data
         {
         }
         //All of our tables are listed as DbSet<Model> /lists
-        public virtual DbSet<Customer> Customers { get; set; } = null!;
-        public virtual DbSet<Order> Orders { get; set; } = null!;
-        public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
-        public virtual DbSet<Product> Products { get; set; } = null!;
+        public virtual DbSet<Customer> Customers { get; set; } 
+        public virtual DbSet<Order> Orders { get; set; } 
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Product> Products { get; set; } 
 
         
         //This is the method that defines the relationships between the tables
@@ -53,8 +55,11 @@ namespace SapphireApp.Data
             });
 
             OnModelCreatingPartial(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<SapphireApp.ViewModels.ProductCreateVM> ProductCreateVM { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-namespace SFlowerApp.Models
+namespace SapphireApp.Models
 {
     public class ErrorViewModel
     {

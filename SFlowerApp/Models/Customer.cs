@@ -44,6 +44,8 @@ namespace SapphireApp.Models
         [Unicode(false)]
         public string Country { get; set; } = null!;
 
+
+
         [InverseProperty("Customer")]
         public virtual ICollection<Order> Orders { get; set; }
     }

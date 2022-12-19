@@ -1,47 +1,73 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SapphireApp.Data;
 using SapphireApp.Models;
 using System.Collections.Generic;
+using System.Linq;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace SapphireApp.Controllers
 {
     public class OrderController : Controller
     {
-        //set a field
-        private readonly SFlowerDbContext _context;
+        SFlowerDbContext _context;
         //set a constructor
         public OrderController(SFlowerDbContext context)
         {
             _context = context;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             IEnumerable<Order> orders = _context.Orders.Include(o => o.Customer);
             return View(orders);
         }
+        //Create
         [HttpGet]
-        public IActionResult Create()
-        {
-                      
-            return View(); 
+        public IActionResult Create(int CustomerId)
+        {  //quick check
+            if (CustomerId < 0)
+            {
+                return NotFound();
+            }
+            
+            Order order = new Order
+            {
+                CustomerId = CustomerId
+            };
+            return View(order);
         }
         [HttpPost]
         public IActionResult Create(Order order)
         {
-            //check if data passed in is valid
-            if (!ModelState.IsValid)
+           
+            //validate order
+            if (!ModelState.IsValid) 
             {
                 return View(order);
-                //return NotFound();
             }
+
+            Order order1 = new Order
+            {
+                CustomerId = order.CustomerId,
+                OrderDate = DateTime.Now,
+                ShipDate = DateTime.Now,
+                ShipName = order.ShipName,
+                ShipAddress = order.ShipAddress,
+                ShipCity = order.ShipCity,
+                ShipCountry = order.ShipCountry,
+                ShipZipCode = order.ShipZipCode,
+                ContactPhone = order.ContactPhone,
+                Customer = order.Customer,
+                OrderDetails = order.OrderDetails,
+                ShipRegion = order.ShipRegion,
+            };
 
             //return Json(order);
             //if valid add it to the collection of orders
-            _context.Orders.Add(order);
-            //save it to the data
+            _context.Orders.Add(order1);
+            //save it 
             _context.SaveChanges();
             //redirect user to the collection of orders
             return RedirectToAction("Index");
@@ -69,7 +95,7 @@ namespace SapphireApp.Controllers
                 return NotFound();
             }
             //pull order object from db
-             Order order = _context.Orders.SingleOrDefault(x => x.Id == model.Id);
+            Order order = _context.Orders.SingleOrDefault(x => x.Id == model.Id);
 
             //map the properties of the parameter order with the order we pulled from the db
 
@@ -83,6 +109,7 @@ namespace SapphireApp.Controllers
             order.ContactPhone = model.ContactPhone;
             order.CustomerId = model.CustomerId;
             order.ShipRegion = model.ShipRegion;
+            order.Customer = model.Customer;
 
             //update the db
             _context.Update(order);
@@ -92,5 +119,17 @@ namespace SapphireApp.Controllers
             return RedirectToAction("Index");
         }
         
+        //need to work on detail view
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            Order orders = _context.Orders.SingleOrDefault(o => o.Id == id);
+            //validate
+            if (orders == null) 
+            {
+                return NotFound();
+            }
+            return View(orders);
+        }
     }
 }

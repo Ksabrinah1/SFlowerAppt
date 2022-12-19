@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SapphireApp.Data;
 using SapphireApp.Models;
-using SFlowerApp.Models;
+using SapphireApp.Models;
 using System.Diagnostics;
 
 namespace SFlowerApp.Controllers
@@ -16,6 +17,7 @@ namespace SFlowerApp.Controllers
             _logger = logger;
             _context = context;
         }
+        
 
         public IActionResult Index()
         {
@@ -24,7 +26,7 @@ namespace SFlowerApp.Controllers
            return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult OrchidCare()
         {
             return View();
         }

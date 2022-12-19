@@ -1,0 +1,38 @@
+﻿@model Customer
+
+<tr>
+    <td>
+        @Model.FirstName
+    </td>
+    <td>
+        @Model.LastName
+    </td>
+    <td>
+        @Model.Phone
+    </td>
+    <td>
+        @Model.Email
+    </td>
+    <td>
+        @Model.Address
+    </td>
+    <td>
+        @Model.City
+    </td>
+    <td>
+        @Model.Region
+    </td>
+    <td>
+        @Model.Zip
+    </td>
+    <td>
+        @Model.Country
+    </td>
+    
+    <td>
+        <a asp-action="Create" asp-controller="Order" asp-route-customerId="@Model.Id">Create Order</a> |
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
+        <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    </td>
+</tr>
